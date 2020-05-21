@@ -3,9 +3,27 @@ class UsersController < ApplicationController
 	before_action :baria_user, only: [:edit, :update]
 
   def show
-  	@user = User.find(params[:id])
-  	@books = @user.books
-  	@book = Book.new #new bookの新規投稿で必要（保存処理はbookコントローラー側で実施）
+    @user = User.find(params[:id])
+    @books = @user.books
+    @book = Book.new #new bookの新規投稿で必要（保存処理はbookコントローラー側で実施）
+    @currentUserUserRoom=UserRoom.where(user_id: current_user.id)
+    @userUserRoom=UserRoom.where(user_id: @user.id)
+    if @user.id == current_user.id
+    else
+      @currentUserUserRoom.each do |cu|
+        @userUserRoom.each do |u|
+          if cu.room_id == u.room_id then
+            @isRoom = true
+            @roomId = cu.room_id
+          end
+        end
+      end
+      if @isRoom
+      else
+        @room = Room.new
+        @user_room = UserRoom.new
+      end
+    end
   end
 
   def index

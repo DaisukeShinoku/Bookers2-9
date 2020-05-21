@@ -19,4 +19,7 @@ Rails.application.routes.draw do
   root to: 'home#top'
   get "search" => "search#search"
 
+  resources :chats, :only => [:create]
+  resources :rooms, :only => [:create, :show, :index]
+
 end
