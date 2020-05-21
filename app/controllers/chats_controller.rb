@@ -9,4 +9,8 @@ class ChatsController < ApplicationController
       redirect_back(fallback_location: root_path)
     end
   end
+
+  def show
+  	@chats = Chat.all
+  end
 end
